@@ -6,7 +6,10 @@ game.PlayScreen = me.ScreenObject.extend({
 		// reset the score
 		game.data.score = 0;
 
-		
+		// loads level 1 in play.js so that it will show up on your screen
+		me.levelDirector.loadLevel("level01");
+
+
 
 		// add our HUD to the game world
 		this.HUD = new game.HUD.Container();
