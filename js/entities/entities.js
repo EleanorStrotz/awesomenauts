@@ -1,19 +1,22 @@
 // TODO
 // since it is a class both letter are capitilized
+// player class. Shows the image that the player is, the height and width
+//also the shape of it
 game.PlayerEntity = me.Entity.extend({
 	init: function(x, y, settings) {
-		this._super(me.Entity, 'init', [x, y, (
+		this._super(me.Entity, 'init', [x, y, {
 			image: "player", 
 			width: 64,
 			height: 64,
 			spritewidth: "64",
 			spriteheight: "64",
-			getShape() 
-			)]);
+			getShape: function(){
+				return(new me.Rect(0, 0, 64, 64)).toPolygon();
+			} 
+			}]);
 	},
 
 	update: function(){
 
 	}
 	});
-// 4:40
