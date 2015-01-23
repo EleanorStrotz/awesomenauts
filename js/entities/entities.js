@@ -17,6 +17,13 @@ game.PlayerEntity = me.Entity.extend({
 		//sets the speed of the character
 		this.body.setVelocity(5, 20);
 
+		//this anmiantion is used for when we are just standing
+		this.renderable.addAnimation("idle", [78]);
+		//adds animation to orcs/ characters walk
+		// 80 at the end is the speed of the walk
+		// the numbers in the brackets are the different pics we are using for the animation
+		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
+
 	},
 
 	update: function(delta){
@@ -35,3 +42,4 @@ game.PlayerEntity = me.Entity.extend({
 		return true;
 	}
 	});
+//4:41 10
