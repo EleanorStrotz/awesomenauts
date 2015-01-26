@@ -24,6 +24,9 @@ game.PlayerEntity = me.Entity.extend({
 		// the numbers in the brackets are the different pics we are using for the animation
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
 
+		//sets currect animation
+		this.renderable.setCurrentAnimation("idle");
+
 	},
 
 	update: function(delta){
@@ -33,13 +36,27 @@ game.PlayerEntity = me.Entity.extend({
 			// setVelocity() and multiplying it by me.timer.tick
 			// me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
-		}//if we press the wrong button then the else statement will go into effect
+			//flips the character so he doesnt go backwards
+			this.flipX(true);
+			}//if we press the wrong button then the else statement will go into effect
 		else{
 			this.body.vel.x = 0;
 		}
+		//checks if character is moving
+		if(!this.body.x !== 0){
+		//if statement checks to see whats going on with the character
+		if(!this.renderable.isCurrentAnimation("walk")){
+			this.renderable.setCurrentAnimation("walk");
+		}
+	}//else statement fixes the error of the character walking backwards
+	else{
+		this.renderable.setCurrentAnimation("idle");
+	}
+
 		// tells the code above to work
 		this.body.update(delta);
+		
+		//another call to the parent class
+		this._super(me.Entity, "update", [delta]);
 		return true;
 	}
-	});
-//4:41 10
