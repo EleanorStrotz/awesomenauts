@@ -60,3 +60,16 @@ game.PlayerEntity = me.Entity.extend({
 		return true;
 	}
 });
+
+//loads the player base from melon js
+game.PlayerBaseEntity = me.Entity.extend({
+	init : function(x, y, settings){
+		this._super(me.Entity, 'init',)
+	},
+
+	update:function(){
+
+	}
+
+});
+//5:36 11
