@@ -1,4 +1,3 @@
-// TODO
 // since it is a class both letter are capitilized
 // player class. Shows the image that the player is, the height and width
 //also the shape of it
@@ -60,3 +59,4 @@ game.PlayerEntity = me.Entity.extend({
 		this._super(me.Entity, "update", [delta]);
 		return true;
 	}
+});
