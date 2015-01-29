@@ -16,6 +16,8 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		//binds the right key for movement
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
+		//binds the attack key for attack
+		me.input.bindKey(me.input.KEY.A, "attack");
 
 
 
