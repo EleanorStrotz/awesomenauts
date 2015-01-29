@@ -15,6 +15,9 @@ game.PlayerEntity = me.Entity.extend({
 			}]);
 		//sets the speed of the character
 		this.body.setVelocity(5, 20);
+		//where ever the player goes the screen follows
+		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+
 
 		//this anmiantion is used for when we are just standing
 		this.renderable.addAnimation("idle", [78]);
@@ -85,12 +88,17 @@ game.PlayerBaseEntity = me.Entity.extend({
 
 		//type that can be used later during other collisons
 		this.type = "PlayerBaseEntity";
+		//adds animation to the tower
+		this.renderable.addAnimation("idle", [0]);
+		this.renderable.addAnimation("broken", [1]);
+		this.renderable.setCurrentAnimation("idle");
 	},
 
 	update:function(delta){
-		// tells us to die if health is less than zeron
+		// tells us to die if health is less than zero
 		if(this.health<=0){
 			this.broken = true;
+			this.renderable.setCurrentAnimation("broken");
 		}
 		this.body.update(delta);
 
@@ -132,12 +140,19 @@ game.EnemyBaseEntity = me.Entity.extend({
 
 		//type that can be used later during other collisons
 		this.type = "EnemyBaseEntity";
+
+		//renderable used to set animaton
+		//sets the animation to the enemy base
+		this.renderable.addAnimation("idle", [0]);
+		this.renderable.addAnimation("broken", [1]);
+		this.renderable.setCurrentAnimation("idle");
 	},
 
 	update:function(delta){
 		// tells us to die if health is less than zeron
 		if(this.health<=0){
 			this.broken = true;
+			this.renderable.setCurrentAnimation("broken");
 		}
 		this.body.update(delta);
 

@@ -41,7 +41,9 @@ var game = {
 	"loaded" : function () {
 		// registers the character entitie into the game
 		me.pool.register("player", game.PlayerEntity, true);
+		//registers the player base from melon js into the game
 		me.pool.register("PlayerBase", game.PlayerBaseEntity, true);
+		// registers the enemy base from melon js to the game
 		me.pool.register("EnemyBase", game.EnemyBaseEntity, true);
 
 
