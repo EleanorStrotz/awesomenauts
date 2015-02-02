@@ -10,7 +10,7 @@ game.PlayerEntity = me.Entity.extend({
 			spritewidth: "64",
 			spriteheight: "64",
 			getShape: function(){
-				return(new me.Rect(0, 0, 64, 64)).toPolygon();
+				return(new me.Rect(0, 0, 100, 70)).toPolygon();
 			} 
 			}]);
 		//sets the speed of the character
@@ -43,7 +43,11 @@ game.PlayerEntity = me.Entity.extend({
 			//flips the character so he doesnt go backwards
 			this.flipX(true);
 			}//if we press the wrong button then the else statement will go into effect
-		else{
+			//else if statement binds the left key
+		}else if(me.input.isKeyPressed("left")){
+
+
+			}else{
 			this.body.vel.x = 0;
 		}
 		//if attack key is pressed character will attack
@@ -91,7 +95,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 			spritewidth: "100",
 			spriteheight: "100",
 			getShape: function(){
-				return (new me.Rect(0, 0, 100, 100)).toPolygon();
+				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
 		//tells us the tower has not been destroyed
@@ -143,7 +147,7 @@ game.EnemyBaseEntity = me.Entity.extend({
 			spritewidth: "100",
 			spriteheight: "100",
 			getShape: function(){
-				return (new me.Rect(0, 0, 100, 100)).toPolygon();
+				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
 		//tells us the tower has not been destroyed
@@ -182,4 +186,4 @@ game.EnemyBaseEntity = me.Entity.extend({
 	}
 
 });
-// 4:10
+// video 14 4:30
