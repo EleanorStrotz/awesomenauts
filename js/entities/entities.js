@@ -26,7 +26,7 @@ game.PlayerEntity = me.Entity.extend({
 		// the numbers in the brackets are the different pics we are using for the animation
 		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
 		//adds animation to the action attack
-		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72],80);
+		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
 
 		//sets currect animation
 		this.renderable.setCurrentAnimation("idle");
@@ -62,7 +62,7 @@ game.PlayerEntity = me.Entity.extend({
 		
 
 		//checks if character is moving
-		if(!this.body.x !== 0){
+		else if(!this.body.x !== 0){
 		//if statement checks to see whats going on with the character
 		if(!this.renderable.isCurrentAnimation("walk")){
 			this.renderable.setCurrentAnimation("walk");
@@ -71,21 +71,6 @@ game.PlayerEntity = me.Entity.extend({
 	else{
 		this.renderable.setCurrentAnimation("idle");
 	}
-
-	//if attack key is pressed character will attack
-		if(me.input.isKeyPressed("attack")){
-			//checks if it has gone through its animation stage
-			if(!this.renderable.isCurrentAnimation("attack")){
-				//sets the current animation to attackand once that is over
-				// goes back to the idle animation
-				this.renderable.setCurrentAnimation("attack", "idle");
-				//makes it so that the next time we start this sequence we begin
-				// from the the first animation, not wherever we left off when we
-				// switched to another animation
-				//this.renderable.setCurrentAnimationFrame();
-			}
-		}
-	
 
 		// tells the code above to work
 		this.body.update(delta);
