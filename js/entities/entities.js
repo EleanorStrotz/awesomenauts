@@ -42,14 +42,23 @@ game.PlayerEntity = me.Entity.extend({
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
 			//flips the character so he doesnt go backwards
 			this.flipX(true);
-			}//if we press the wrong button then the else statement will go into effect
-			//else if statement binds the left key
+			//if we press the wrong button then the else statement will go into effect
+			// if statement binds the left key so that we can move left
 		}else if(me.input.isKeyPressed("left")){
-
+			this.body.vel.x -=this.body.accel.x * me.timer.tick;
+			this.flipX(false);
 
 			}else{
 			this.body.vel.x = 0;
 		}
+		//not in else statement because jumping involves the y axis not the x
+		// binds the space bar so that we can jump
+		if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling){
+			this.jumping = true;
+			this.body.vel.y -= this.body.accel.y * me.timer.tick;
+		}
+
+
 		//if attack key is pressed character will attack
 		if(me.input.isKeyPressed("attack")){
 			//checks if it has gone through its animation stage
@@ -186,4 +195,3 @@ game.EnemyBaseEntity = me.Entity.extend({
 	}
 
 });
-// video 14 4:30
