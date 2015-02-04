@@ -15,6 +15,8 @@ game.PlayerEntity = me.Entity.extend({
 			}]);
 		//sets the speed of the character
 		this.body.setVelocity(5, 20);
+		//keeps track of what direction your character is going
+		this.facing = "right";
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
@@ -40,11 +42,14 @@ game.PlayerEntity = me.Entity.extend({
 			// setVelocity() and multiplying it by me.timer.tick
 			// me.timer.tick makes the movement look smooth
 			this.body.vel.x += this.body.accel.x * me.timer.tick;
+			//checks what way your character is going
+			this.facing = "right";
 			//flips the character so he doesnt go backwards
 			this.flipX(true);
 			//if we press the wrong button then the else statement will go into effect
 			// if statement binds the left key so that we can move left
 		}else if(me.input.isKeyPressed("left")){
+			this.facing = "left";
 			this.body.vel.x -=this.body.accel.x * me.timer.tick;
 			this.flipX(false);
 
@@ -53,7 +58,7 @@ game.PlayerEntity = me.Entity.extend({
 		}
 		//not in else statement because jumping involves the y axis not the x
 		// binds the space bar so that we can jump
-		if(me.input.isKeyPressed("jump") && !this.jumping && !this.falling){
+		if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
 			this.jumping = true;
 			this.body.vel.y -= this.body.accel.y * me.timer.tick;
 		}
@@ -72,7 +77,8 @@ game.PlayerEntity = me.Entity.extend({
 				//this.renderable.setCurrentAnimationFrame();
 			}
 		}
-		
+		//checks for collisions
+		me.collision.check(this, true, this.collideMandler.bind(this), true);
 
 		//checks if character is moving
 		else if(!this.body.x !== 0){
@@ -91,7 +97,16 @@ game.PlayerEntity = me.Entity.extend({
 		//another call to the parent class
 		this._super(me.Entity, "update", [delta]);
 		return true;
+	},
+
+	// tells us if we collide with the enemy base
+	collideMandler: function(response){
+		if(response.b.type==='EnemyBaseEntity'){
+			var ydif = this.pos.y - response.b.pos.y;
+			var xdif = this.pos.x - response.b.pos.x;
+		}
 	}
+
 });
 
 //loads the player base from melon js
