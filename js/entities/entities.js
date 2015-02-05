@@ -78,18 +78,18 @@ game.PlayerEntity = me.Entity.extend({
 			}
 		}
 		//checks for collisions
-		me.collision.check(this, true, this.collideMandler.bind(this), true);
+		me.collision.check(this, true, this.collideHandler.bind(this), true);
 
 		//checks if character is moving
-		else if(!this.body.x !== 0){
+		//else if(!this.body.x !== 0){
 		//if statement checks to see whats going on with the character
-		if(!this.renderable.isCurrentAnimation("walk")){
-			this.renderable.setCurrentAnimation("walk");
-		}
-	}//else statement fixes the error of the character walking backwards
-	else{
-		this.renderable.setCurrentAnimation("idle");
-	}
+		//if(!this.renderable.isCurrentAnimation("walk")){
+		//	this.renderable.setCurrentAnimation("walk");
+		//}
+	//}//else statement fixes the error of the character walking backwards
+	//else{
+		//this.renderable.setCurrentAnimation("idle");
+	//}
 
 		// tells the code above to work
 		this.body.update(delta);
@@ -100,10 +100,27 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	// tells us if we collide with the enemy base
-	collideMandler: function(response){
+	collideHandler: function(response){
 		if(response.b.type==='EnemyBaseEntity'){
 			var ydif = this.pos.y - response.b.pos.y;
 			var xdif = this.pos.x - response.b.pos.x;
+
+			//checks to see when character collides with enemy base
+			console.log("xdif " + xdif + "ydif " + ydif);
+			//the the player goes more than the number placed then it will stop moving
+			//facing code allows us to move away from the base
+			// xdif makes sure that both if statements wont trigger
+			if(xdif>-35 && this.facing==='right' && (xdif<0)){
+				//stops player from moving if they hit the base
+				this.body.vel.x = 0;
+				// moves player back a bit
+				this.pos.x = this.pos.x - 1;
+				//else if statement is used if the character is facing left
+			}else if(xdif<70 && this.facing==='left' && xdif>0){
+				this.body.vel.x = 0;
+				this.pos.x = this.pos.x +1;
+
+			}
 		}
 	}
 
@@ -210,3 +227,4 @@ game.EnemyBaseEntity = me.Entity.extend({
 	}
 
 });
+// line 85- 91 makes the player move while walking
