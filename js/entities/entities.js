@@ -254,3 +254,15 @@ game.EnemyBaseEntity = me.Entity.extend({
 
 });
 // line 85- 91 makes the player move while walking
+
+game.EnemyCreep = me.Entity.extend({
+	init: function(x, y, settings){
+		this._super(me.Entity, 'init', [x, y, {
+
+		}]);
+	},
+
+	update: function(){
+
+	}
+});
