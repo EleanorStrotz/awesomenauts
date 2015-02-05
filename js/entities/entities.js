@@ -17,6 +17,11 @@ game.PlayerEntity = me.Entity.extend({
 		this.body.setVelocity(5, 20);
 		//keeps track of what direction your character is going
 		this.facing = "right";
+		//keeps track of what time it is for the game
+		this.now = new Date() .getTime();
+		//lets the character hit the other characters over and over again
+		this.lastHit = this.now;
+		this.lastAttack = new Date () .getTime();
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
@@ -36,6 +41,8 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	update: function(delta){
+		//updates this.now
+		this.now = new Date().getTime();
 		//checks and sees if the right key is pressed
 		if(me.input.isKeyPressed("right")){
 			// adds the position of my x by adding the velocity defined above in
@@ -77,19 +84,21 @@ game.PlayerEntity = me.Entity.extend({
 				//this.renderable.setCurrentAnimationFrame();
 			}
 		}
+		//checks if character is moving
+		//checks that we dont have an attack animation going on
+		else if(!this.body.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
+		//if statement checks to see whats going on with the character
+		if(!this.renderable.isCurrentAnimation("walk")){
+			this.renderable.setCurrentAnimation("walk");
+		}
+	}//else statement fixes the error of the character walking backwards
+	else if(!this.renderable.isCurrentAnimation("attack")){
+		this.renderable.setCurrentAnimation("idle");
+	}
 		//checks for collisions
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
 
-		//checks if character is moving
-		//else if(!this.body.x !== 0){
-		//if statement checks to see whats going on with the character
-		//if(!this.renderable.isCurrentAnimation("walk")){
-		//	this.renderable.setCurrentAnimation("walk");
-		//}
-	//}//else statement fixes the error of the character walking backwards
-	//else{
-		//this.renderable.setCurrentAnimation("idle");
-	//}
+		
 
 		// tells the code above to work
 		this.body.update(delta);
@@ -125,6 +134,13 @@ game.PlayerEntity = me.Entity.extend({
 			}else if(xdif<70 && this.facing==='left' && xdif>0){
 				this.body.vel.x = 0;
 				this.pos.x = this.pos.x +1;
+			}
+			//checks if the current animation is attack
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000){
+				cosole.log("tower Hit");
+				this.lastHit = this.now;
+				//character dies
+				response.b.loseHealth();
 			}
 		}
 	}
@@ -229,6 +245,11 @@ game.EnemyBaseEntity = me.Entity.extend({
 
 	onCollision: function(){
 		
+	},
+
+	loseHealth: function(){
+		//losses health
+		this.health--;
 	}
 
 });
