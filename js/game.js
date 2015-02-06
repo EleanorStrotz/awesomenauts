@@ -45,6 +45,8 @@ var game = {
 		me.pool.register("PlayerBase", game.PlayerBaseEntity, true);
 		// registers the enemy base from melon js to the game
 		me.pool.register("EnemyBase", game.EnemyBaseEntity, true);
+		//loads the creep character
+		me.pool.register("EnemyCreep", game.EnemyCreep, true);
 
 
 		me.state.set(me.state.MENU, new game.TitleScreen());
