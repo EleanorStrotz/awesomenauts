@@ -47,6 +47,8 @@ var game = {
 		me.pool.register("EnemyBase", game.EnemyBaseEntity, true);
 		//loads the creep character
 		me.pool.register("EnemyCreep", game.EnemyCreep, true);
+		// registers the timer into the game
+		me.pool.register("GameManager", game.GameManager);
 
 
 		me.state.set(me.state.MENU, new game.TitleScreen());

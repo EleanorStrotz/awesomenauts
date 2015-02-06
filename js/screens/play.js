@@ -14,6 +14,11 @@ game.PlayScreen = me.ScreenObject.extend({
 		// adds player to the world
 		me.game.world.addChild(player, 5);
 
+		//generates game mangaer in play.js
+		var gamemanager = me.pool.pull("GameManager", 0, 0, {});
+		//adds game manager into the game/world
+		me.game.world.addChild(gamemanager, 0);
+
 		//binds the right key for movement
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
 		//binds the left key for movement
