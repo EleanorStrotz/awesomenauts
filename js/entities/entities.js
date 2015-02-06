@@ -272,7 +272,7 @@ game.EnemyCreep = me.Entity.extend({
 		this.alwaysUpdate = true;
 
 		//sets veloctiy
-		this.setVelocity(3, 20);
+		this.body.setVelocity(3, 20);
 
 		this.type = "EnemyCreep";
 
@@ -282,7 +282,11 @@ game.EnemyCreep = me.Entity.extend({
 		this.renderable.setCurrentAnimation("walk");
 	},
 
-	update: function(){
+	update: function(delta){
+		//has player accelerate
+		this.body.vel.x -= this.body.accel.x * me.timer.tick
+
+		return true;
 
 	}
 });
