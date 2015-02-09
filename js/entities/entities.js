@@ -270,7 +270,13 @@ game.EnemyCreep = me.Entity.extend({
 		}]);
 		this.health = 10;
 		this.alwaysUpdate = true;
-
+		//this.attacking lets us know if the enemy is currently attacking
+		this.attacking = false;
+		//keeps track of when our creep last attacked anything
+		this.lastAttacking = new Date().getTime();
+		// keeps track of last thing our creep hit anything
+		this.lastHit = new Date(). getTime();
+		this.now = new Date().getTime();
 		//sets veloctiy
 		this.body.setVelocity(3, 20);
 
@@ -283,11 +289,44 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta){
+		this.now = new Date().getTime();
 		//has player accelerate
-		this.body.vel.x -= this.body.accel.x * me.timer.tick
+		this.body.vel.x -= this.body.accel.x * me.timer.tick;
+
+		//checks for collisions with our player
+		//if there are collisions it passes it to collide handler
+		me.collison.check(this, true, this.collideHandler.bind(this), true);
+
+		this.body.update(delta);
+
+		this._super(me.Entity, "update", [delta]);
 
 		return true;
 
+	},
+
+	//handels collisons with the player
+	//any lines of code that deal with the collisions above get sent down here and passed through
+	collideHandler: function(response) {
+		//some simple code to start it off
+		//shows what we are colliding with
+		if(response.b.type=== 'PlayerBase') {
+			//tells if we are attacking
+			this.attacking=true;
+			//timer that tells the last time the player attacked
+			//this.lastAttacking=this.now;
+			//sets velocity to zero
+			this.body.vel.x = 0;
+			//if we get to close to the base we will stop
+			this.pos.x = this.pos.x + 1;
+			//checks another timer
+			//lets you attack again if you had attacked the last second
+			if(this.now-this.lastMit >= 1000){
+				this.lastHit = this.now;
+				//a function that causes the player to loose some health
+				response.b.loseHealth(1);
+			}
+		}
 	}
 });
 
@@ -316,3 +355,4 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
+// 6: 28
