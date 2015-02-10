@@ -170,7 +170,7 @@ game.PlayerBaseEntity = me.Entity.extend({
 		this.body.onCollision = this.onCollision.bind(this);
 
 		//type that can be used later during other collisons
-		this.type = "PlayerBaseEntity";
+		this.type = "PlayerBase";
 		//adds animation to the tower
 		this.renderable.addAnimation("idle", [0]);
 		this.renderable.addAnimation("broken", [1]);
@@ -187,6 +187,12 @@ game.PlayerBaseEntity = me.Entity.extend({
 
 		this._super(me.Entity, "update", [delta]);
 		return true;
+	},
+
+	//function for loosing health when attacking
+	loseHealth: function(damage){
+		this.health = this.health - damage;
+
 	},
 
 	onCollision: function(){
@@ -295,7 +301,7 @@ game.EnemyCreep = me.Entity.extend({
 
 		//checks for collisions with our player
 		//if there are collisions it passes it to collide handler
-		me.collison.check(this, true, this.collideHandler.bind(this), true);
+		//me.collison.check(this, true, this.collideHandler.bind(this), true);
 
 		this.body.update(delta);
 
@@ -318,11 +324,16 @@ game.EnemyCreep = me.Entity.extend({
 			//sets velocity to zero
 			this.body.vel.x = 0;
 			//if we get to close to the base we will stop
+			//keeps moving the creep to the right to maintain its position
 			this.pos.x = this.pos.x + 1;
+			//checks that it has been at least one second since this creep has hit a base
 			//checks another timer
 			//lets you attack again if you had attacked the last second
-			if(this.now-this.lastMit >= 1000){
+			if((this.now-this.lastMit >= 1000)){
+				//updates the last hit timer
 				this.lastHit = this.now;
+				//makes the player base call its loose health function and passes it at a
+				//damage of 1
 				//a function that causes the player to loose some health
 				response.b.loseHealth(1);
 			}
@@ -355,4 +366,3 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
-// 6: 28
