@@ -329,7 +329,7 @@ game.EnemyCreep = me.Entity.extend({
 			//checks that it has been at least one second since this creep has hit a base
 			//checks another timer
 			//lets you attack again if you had attacked the last second
-			if((this.now-this.lastMit >= 1000)){
+			if((this.now-this.lastHit >= 1000)){
 				//updates the last hit timer
 				this.lastHit = this.now;
 				//makes the player base call its loose health function and passes it at a
@@ -337,7 +337,8 @@ game.EnemyCreep = me.Entity.extend({
 				//a function that causes the player to loose some health
 				response.b.loseHealth(1);
 			}
-		}
+		}//what happens if we hit the player base
+		//else if (){}
 	}
 });
 
