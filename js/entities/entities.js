@@ -81,7 +81,7 @@ game.PlayerEntity = me.Entity.extend({
 				//makes it so that the next time we start this sequence we begin
 				// from the the first animation, not wherever we left off when we
 				// switched to another animation
-				this.renderable.setCurrentAnimationFrame();
+				//this.renderable.setCurrentAnimationFrame();
 			}
 		}
 		//checks if character is moving
@@ -95,7 +95,7 @@ game.PlayerEntity = me.Entity.extend({
 	else if(!this.renderable.isCurrentAnimation("attack")){
 		this.renderable.setCurrentAnimation("idle");
 	}
-	
+
 		//checks for collisions
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
 
