@@ -18,10 +18,10 @@ game.PlayerEntity = me.Entity.extend({
 		//keeps track of what direction your character is going
 		this.facing = "right";
 		//keeps track of what time it is for the game
-		this.now = new Date() .getTime();
+		this.now = new Date().getTime();
 		//lets the character hit the other characters over and over again
 		this.lastHit = this.now;
-		this.lastAttack = new Date () .getTime();
+		this.lastAttack = new Date().getTime();
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
@@ -66,7 +66,7 @@ game.PlayerEntity = me.Entity.extend({
 		//not in else statement because jumping involves the y axis not the x
 		// binds the space bar so that we can jump
 		if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
-			this.jumping = true;
+			this.body.jumping = true;
 			this.body.vel.y -= this.body.accel.y * me.timer.tick;
 		}
 
@@ -81,12 +81,12 @@ game.PlayerEntity = me.Entity.extend({
 				//makes it so that the next time we start this sequence we begin
 				// from the the first animation, not wherever we left off when we
 				// switched to another animation
-				//this.renderable.setCurrentAnimationFrame();
+				this.renderable.setCurrentAnimationFrame();
 			}
 		}
 		//checks if character is moving
 		//checks that we dont have an attack animation going on
-		else if(!this.body.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
+		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
 		//if statement checks to see whats going on with the character
 		if(!this.renderable.isCurrentAnimation("walk")){
 			this.renderable.setCurrentAnimation("walk");
@@ -95,6 +95,7 @@ game.PlayerEntity = me.Entity.extend({
 	else if(!this.renderable.isCurrentAnimation("attack")){
 		this.renderable.setCurrentAnimation("idle");
 	}
+	
 		//checks for collisions
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
 
@@ -281,7 +282,7 @@ game.EnemyCreep = me.Entity.extend({
 		//keeps track of when our creep last attacked anything
 		this.lastAttacking = new Date().getTime();
 		// keeps track of last thing our creep hit anything
-		this.lastHit = new Date(). getTime();
+		this.lastHit = new Date().getTime();
 		this.now = new Date().getTime();
 		//sets veloctiy
 		this.body.setVelocity(3, 20);
@@ -301,7 +302,7 @@ game.EnemyCreep = me.Entity.extend({
 
 		//checks for collisions with our player
 		//if there are collisions it passes it to collide handler
-		//me.collison.check(this, true, this.collideHandler.bind(this), true);
+		me.collision.check(this, true, this.collideHandler.bind(this), true);
 
 		this.body.update(delta);
 
@@ -316,9 +317,9 @@ game.EnemyCreep = me.Entity.extend({
 	collideHandler: function(response) {
 		//some simple code to start it off
 		//shows what we are colliding with
-		if(response.b.type=== 'PlayerBase') {
+		if(response.b.type === 'PlayerBase') {
 			//tells if we are attacking
-			this.attacking=true;
+			this.attacking = true;
 			//timer that tells the last time the player attacked
 			//this.lastAttacking=this.now;
 			//sets velocity to zero
@@ -355,7 +356,7 @@ game.GameManager = Object.extend({
 		this.now = new Date().getTime();
 
 		//controls when the creep spons
-		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >+ 1000)){
+		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
 			//controls when the creep spons
 			this.lastCreep = this.now;
 			//bulids a creep and puts it into the world
