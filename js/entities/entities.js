@@ -471,7 +471,7 @@ game.Player2 = me.Entity.extend({
 				//makes the player call its loose health function and passes it at a
 				//damage of 1
 				//a function that causes the player to loose some health
-				response.b.loseHealth(1);
+				//response.b.loseHealth(1);
 			}
 		}
 	}
