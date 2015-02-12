@@ -14,6 +14,8 @@ game.resources = [
 	 {name: "tower", type:"image", src: "data/img/tower_round.svg.png"},
 	 //loads the image for our creep/ enemy
 	 {name: "creep1", type:"image", src: "data/img/brainmonster.png"},
+
+	 {name: "Player2", type:"image", src: "data/img/gloop.png"},
 	/* Atlases 
 	 * @example
 	 * {name: "example_tps", type: "tps", src: "data/img/example_tps.json"},
