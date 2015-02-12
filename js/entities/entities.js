@@ -68,6 +68,8 @@ game.PlayerEntity = me.Entity.extend({
 		if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
 			this.body.jumping = true;
 			this.body.vel.y -= this.body.accel.y * me.timer.tick;
+			me.audio.play("stomp");
+
 		}
 
 
@@ -82,6 +84,7 @@ game.PlayerEntity = me.Entity.extend({
 				// from the the first animation, not wherever we left off when we
 				// switched to another animation
 				//this.renderable.setCurrentAnimationFrame();
+				me.audio.play("jump");
 			}
 		}
 		//checks if character is moving
@@ -339,7 +342,28 @@ game.EnemyCreep = me.Entity.extend({
 				response.b.loseHealth(1);
 			}
 		}//what happens if we hit the player base
-		//else if (){}
+		else if (response.b.type=== 'PlayerEntity'){
+			//tells if we are attacking
+			this.attacking = true;
+			//timer that tells the last time the player attacked
+			this.lastAttacking=this.now;
+			//sets velocity to zero
+			this.body.vel.x = 0;
+			//if we get to close to the base we will stop
+			//keeps moving the creep to the right to maintain its position
+			this.pos.x = this.pos.x + 1;
+			//checks that it has been at least one second since this creep has hit something
+			//checks another timer
+			//lets you attack again if you had attacked the last second
+			if((this.now-this.lastHit >= 1000)){
+				//updates the last hit timer
+				this.lastHit = this.now;
+				//makes the player call its loose health function and passes it at a
+				//damage of 1
+				//a function that causes the player to loose some health
+				response.b.loseHealth(1);
+			}
+		}
 	}
 });
 
