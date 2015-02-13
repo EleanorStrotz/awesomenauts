@@ -13,6 +13,10 @@ game.PlayerEntity = me.Entity.extend({
 				return(new me.Rect(0, 0, 100, 70)).toPolygon();
 			} 
 			}]);
+		//sets type so that creep can collide with it
+		this.type = "PlayerEntity";
+		//sets players health
+		this.heatlth = 20;
 		//sets the speed of the character
 		this.body.setVelocity(5, 20);
 		//keeps track of what direction your character is going
@@ -115,6 +119,8 @@ game.PlayerEntity = me.Entity.extend({
 	loseHealth: function(damage){
 		//player loses health
 		this.health = this.health - damage;
+		//prints out what our health is
+		console.log(this.health);
 
 
 	},
@@ -351,19 +357,25 @@ game.EnemyCreep = me.Entity.extend({
 			}
 		}//what happens if we hit the player base
 		else if (response.b.type=== 'PlayerEntity'){
+			//checks position of creep
+			var xdif = this.pos.x - response.b.pos.x;
 			//tells if we are attacking
 			this.attacking = true;
 			//timer that tells the last time the player attacked
-			this.lastAttacking=this.now;
-			//sets velocity to zero
-			this.body.vel.x = 0;
+			////this.lastAttacking=this.now;
+			//changes postion if it is attacking
+			if(xdif>0){
+				this.pos.x = this.pos.x + 1;
+				//sets velocity to zero
+			    this.body.vel.x = 0;
+			}
 			//if we get to close to the base we will stop
 			//keeps moving the creep to the right to maintain its position
 			this.pos.x = this.pos.x + 1;
 			//checks that it has been at least one second since this creep has hit something
 			//checks another timer
 			//lets you attack again if you had attacked the last second
-			if((this.now-this.lastHit >= 1000)){
+			if((this.now-this.lastHit >= 1000) && xdif>0){
 				//updates the last hit timer
 				this.lastHit = this.now;
 				//makes the player call its loose health function and passes it at a
