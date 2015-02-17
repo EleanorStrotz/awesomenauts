@@ -32,7 +32,7 @@ game.resources = [
 	 * @example
 	 * {name: "example_bgm", type: "audio", src: "data/bgm/"},
 	 */
-	// {name: "Zelda Main Theme Song", type: "audio", src: "data/bgm/"},	
+	 {name: "Zelda Main Theme Song", type: "audio", src: "data/bgm/"},	
 
 	/* Sound effects. 
 	 * @example
