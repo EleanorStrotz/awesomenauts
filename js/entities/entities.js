@@ -160,6 +160,17 @@ game.PlayerEntity = me.Entity.extend({
 				//character dies
 				response.b.loseHealth();
 			}
+			//makes the creep loose health
+		}else if(response.b.type==='EnemyCreep'){
+			//lets you loose health if you are facing the x axis
+			var xdif = this.pos.x - response.b.pos.x;
+			//lets you loose health if you are facing the y axis
+			var ydif = this.pos.y - response.b.pos.y;
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000){
+				//updates the timers
+				this.lastHit = this.now;
+				response.b.loseHealth(1);
+			}
 		}
 	}
 
@@ -312,7 +323,17 @@ game.EnemyCreep = me.Entity.extend({
 		this.renderable.setCurrentAnimation("walk");
 	},
 
+	//loose health function for enemy creep
+	loseHealth: function(damage) {
+		this.health = this.health - damage;
+	},
+
 	update: function(delta){
+		//if statement for loose health
+		if(this.health <= 0){
+			me.game.world.removeChild(this);
+		}
+
 		this.now = new Date().getTime();
 		//has player accelerate
 		this.body.vel.x -= this.body.accel.x * me.timer.tick;
@@ -514,3 +535,6 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
+
+
+//5:11
