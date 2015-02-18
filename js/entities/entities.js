@@ -166,7 +166,28 @@ game.PlayerEntity = me.Entity.extend({
 			var xdif = this.pos.x - response.b.pos.x;
 			//lets you loose health if you are facing the y axis
 			var ydif = this.pos.y - response.b.pos.y;
-			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000){
+
+			//loose health if character comes in form the right or left
+			//makes it so that we cant walk right into the base
+			if (xdif>0){
+				this.pos.x = this.pos.x + 1;
+				//keeps track of what way we are facing
+				if(this.facing==="left"){
+					this.body.vel.x = 0;
+				}
+			}else{
+				this.pos.x = this.pos.x - 1;
+				//keeps track of what way we are facing
+				if(this.facing==="right"){
+					this.body.vel.x = 0;
+				}
+			}
+
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000
+				//checks the absolute value of the y and x difference
+				&& (Math.abs(ydif) <=40) && 
+				(((xdif>0) && this.facing==="left") || ((xdif<0) && this.facing==="right"))
+				){
 				//updates the timers
 				this.lastHit = this.now;
 				response.b.loseHealth(1);
@@ -329,6 +350,8 @@ game.EnemyCreep = me.Entity.extend({
 	},
 
 	update: function(delta){
+		//lets us know what the creeps health is
+		console.log(this.health);
 		//if statement for loose health
 		if(this.health <= 0){
 			me.game.world.removeChild(this);
@@ -535,6 +558,3 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
-
-
-//5:11
