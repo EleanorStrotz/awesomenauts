@@ -160,11 +160,11 @@ game.PlayerEntity = me.Entity.extend({
 				//stops player from moving if they hit the base
 				this.body.vel.x = 0;
 				// moves player back a bit
-				this.pos.x = this.pos.x - 1;
+				////this.pos.x = this.pos.x - 1;
 				//else if statement is used if the character is facing left
 			}else if(xdif<70 && this.facing==='left' && xdif>0){
 				this.body.vel.x = 0;
-				this.pos.x = this.pos.x +1;
+				////this.pos.x = this.pos.x +1;
 			}
 			//checks if the current animation is attack
 			//uses the global variable that helps the player loose health
@@ -185,7 +185,7 @@ game.PlayerEntity = me.Entity.extend({
 			//loose health if character comes in form the right or left
 			//makes it so that we cant walk right into the base
 			if (xdif>0){
-				this.pos.x = this.pos.x + 1;
+				////this.pos.x = this.pos.x + 1;
 				//keeps track of what way we are facing
 				if(this.facing==="left"){
 					this.body.vel.x = 0;
@@ -586,3 +586,5 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
+
+// video 25 1:21
