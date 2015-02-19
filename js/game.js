@@ -6,16 +6,23 @@ var game = {
 	data : {
 		// score
 		score : 0,
+		//global variables that we can use throughout the game
 		enemyBaseHealth: 10,
 		playerBaseHealth: 10,
 		enemyCreepHealth: 10,
 		playerHealth: 10,
 		enemyCreepAttack: 1,
 		playerAttack: 1,
+		//orcBaseDamage: 10,
+		//orcBaseHealth: 100,
+		//orcBaseSpeed: 3,
+		//orcBaseDefense: 0,
 		playerAttackTimer: 1000,
-		creepAttackTimer: 1000,
+		enemyCreepAttackTimer: 1000,
 		playerMoveSpeed: 5,
 		creepMoveSpeed: 5,
+		gameManager:"",
+		player:""
 	},
 	
 	
@@ -71,5 +78,3 @@ var game = {
 	}
 };
 
-
-//2:45 24

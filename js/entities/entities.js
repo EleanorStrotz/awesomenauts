@@ -16,15 +16,20 @@ game.PlayerEntity = me.Entity.extend({
 		//sets type so that creep can collide with it
 		this.type = "PlayerEntity";
 		//sets players health
-		this.heatlth = 20;
+		//uses the global variable that helps the player loose health
+		//variable located in game.js
+		this.heatlth = game.data.playerHealth;
 		//sets the speed of the character
-		this.body.setVelocity(5, 20);
+		this.body.setVelocity(game.data.playerMoveSpeed, 20);
 		//keeps track of what direction your character is going
 		this.facing = "right";
 		//keeps track of what time it is for the game
 		this.now = new Date().getTime();
 		//lets the character hit the other characters over and over again
 		this.lastHit = this.now;
+		//players death function
+		//what happens if the player dies
+		this.dead = false;
 		this.lastAttack = new Date().getTime();
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
@@ -47,6 +52,14 @@ game.PlayerEntity = me.Entity.extend({
 	update: function(delta){
 		//updates this.now
 		this.now = new Date().getTime();
+		//makes the player die
+		if (this.health <= 0){
+			this.dead = true;
+			this.pos.x = 10;
+			this.pos.y = 0;
+			this.health = game.data.playerHealth;
+		}
+
 		//checks and sees if the right key is pressed
 		if(me.input.isKeyPressed("right")){
 			// adds the position of my x by adding the velocity defined above in
@@ -154,11 +167,13 @@ game.PlayerEntity = me.Entity.extend({
 				this.pos.x = this.pos.x +1;
 			}
 			//checks if the current animation is attack
-			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000){
+			//uses the global variable that helps the player loose health
+		    //variable located in game.js
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer){
 				cosole.log("tower Hit");
 				this.lastHit = this.now;
-				//character dies
-				response.b.loseHealth();
+				//character dies/looses health when the player attacks the creep more than a certain number of attacks
+				response.b.loseHealth(game.data.playerAttack);
 			}
 			//makes the creep loose health
 		}else if(response.b.type==='EnemyCreep'){
@@ -182,15 +197,18 @@ game.PlayerEntity = me.Entity.extend({
 					this.body.vel.x = 0;
 				}
 			}
-
-			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= 1000
+			//uses the global variable that helps the player loose health
+			//variable located in game.js
+			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
 				//checks the absolute value of the y and x difference
 				&& (Math.abs(ydif) <=40) && 
 				(((xdif>0) && this.facing==="left") || ((xdif<0) && this.facing==="right"))
 				){
 				//updates the timers
 				this.lastHit = this.now;
-				response.b.loseHealth(1);
+				//the player dies or looses health if it is attacking for too long
+				//timer
+				response.b.loseHealth(game.data.playerAttack);
 			}
 		}
 	}
@@ -213,7 +231,9 @@ game.PlayerBaseEntity = me.Entity.extend({
 		//tells us the tower has not been destroyed
 		this.broken = false;
 		//gives the tower a health
-		this.health = 10;
+		//uses the global variable that helps the player base loose health
+		//variable located in game.js
+		this.health = game.data.playerBaseHealth;
 		//even if we cannot see the screen it will still update
 		this.alwaysUpdate = true;
 		//if someone runs into the tower it will be able to collide
@@ -271,7 +291,8 @@ game.EnemyBaseEntity = me.Entity.extend({
 		//tells us the tower has not been destroyed
 		this.broken = false;
 		//gives the tower a health
-		this.health = 10;
+		//uses the global variable that helps the base loose health in game.js
+		this.health = game.data.enemyBaseHealth;
 		//even if we cannot see the screen it will still update
 		this.alwaysUpdate = true;
 		//if someone runs into the tower it will be able to collide
@@ -324,7 +345,10 @@ game.EnemyCreep = me.Entity.extend({
 				return (new me.Rect(0, 0, 32, 64)).toPolygon();
 			}
 		}]);
-		this.health = 10;
+		//uses the global variable that helps the player loose health
+		//variable located in game.js
+		this.health = game.data.enemyCreepHealth;
+		//updates the enemy creep
 		this.alwaysUpdate = true;
 		//this.attacking lets us know if the enemy is currently attacking
 		this.attacking = false;
@@ -397,7 +421,9 @@ game.EnemyCreep = me.Entity.extend({
 				//makes the player base call its loose health function and passes it at a
 				//damage of 1
 				//a function that causes the player to loose some health
-				response.b.loseHealth(1);
+				//uses the global variable that helps the player loose health
+				//variable located in game.js
+				response.b.loseHealth(game.data.enemyCreepAttack);
 			}
 		}//what happens if we hit the player base
 		else if (response.b.type=== 'PlayerEntity'){
@@ -425,7 +451,9 @@ game.EnemyCreep = me.Entity.extend({
 				//makes the player call its loose health function and passes it at a
 				//damage of 1
 				//a function that causes the player to loose some health
-				response.b.loseHealth(1);
+				//uses the global variable that helps the player loose health
+				//variable located in game.js
+				response.b.loseHealth(game.data.enemyCreepAttack);
 			}
 		}
 	}
