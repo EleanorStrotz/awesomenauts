@@ -9,14 +9,16 @@ game.PlayScreen = me.ScreenObject.extend({
 		// loads level 1 in play.js so that it will show up on your screen
 		me.levelDirector.loadLevel("level01");
 
+		//linked to reset player
+		//resets the player when it dies
+		this.resetPlayer(0, 420);
+
 		//loads the plyer so that it will show up when you run it
 		var player = me.pool.pull("player", 0, 420, {});
 		// adds player to the world
-		me.game.world.addChild(player, 5);
+		
 
-		var player = me.pool.pull("Player2", 0, 420, {});
-		// adds player to the world
-		me.game.world.addChild(player, 5);
+		
 
 		//generates game mangaer in play.js
 		var gamemanager = me.pool.pull("GameManager", 0, 0, {});
@@ -50,5 +52,12 @@ game.PlayScreen = me.ScreenObject.extend({
 	onDestroyEvent: function() {
 		// remove the HUD from the game world
 		me.game.world.removeChild(this.HUD);
+	},
+	//resets the player
+	//global varible in game used
+	resetPlayer: function(x, y){
+		game.data.player = me.pool.pull("player", x, y, {});
+		// adds player to the world
+		me.game.world.addChild(game.data.player, 5);
 	}
 });

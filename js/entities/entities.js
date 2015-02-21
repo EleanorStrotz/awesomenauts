@@ -55,9 +55,6 @@ game.PlayerEntity = me.Entity.extend({
 		//makes the player die
 		if (this.health <= 0){
 			this.dead = true;
-			this.pos.x = 10;
-			this.pos.y = 0;
-			this.health = game.data.playerHealth;
 		}
 
 		//checks and sees if the right key is pressed
@@ -469,7 +466,7 @@ game.Player2 = me.Entity.extend({
 			spritewidth: "100",
 			spriteheight: "85",
 			getShape: function(){
-				return (new me.Rect(0, 0, 100, 85)).toPolygon();
+				return (new me.Rect(0, 0, 52, 100)).toPolygon();
 			}
 		}]);
 		this.health = 10;
@@ -499,7 +496,7 @@ game.Player2 = me.Entity.extend({
 		this.flipX(true);
 		//checks for collisions with our player
 		//if there are collisions it passes it to collide handler
-		me.collision.check(this, true, this.collideHandler.bind(this), true);
+		//me.collision.check(this, true, this.collideHandler.bind(this), true);
 
 		this.body.update(delta);
 
@@ -573,6 +570,12 @@ game.GameManager = Object.extend({
 	update: function(){
 		this.now = new Date().getTime();
 
+		//dead function in game manager
+		if(game.data.player.dead){
+			me.game.world.removeChild(game.data.player);
+			me.state.current().resetPlayer(10, 0);
+		}
+
 		//controls when the creep spons
 		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
 			//controls when the creep spons
@@ -581,10 +584,13 @@ game.GameManager = Object.extend({
 			var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
 			me.game.world.addChild(creepe, 5);
 
+			var creepe1 = me.pool.pull("Player2", 1000, 0, {});
+			me.game.world.addChild(creepe, 5);
+
 		}
 
 		return true;
 	}
 });
 
-// video 25 1:21
+
