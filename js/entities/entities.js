@@ -30,6 +30,8 @@ game.PlayerEntity = me.Entity.extend({
 		//players death function
 		//what happens if the player dies
 		this.dead = false;
+		//a gold is added when the creep dies from attack
+		this.attack = game.data.playerAttack;
 		this.lastAttack = new Date().getTime();
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
@@ -167,7 +169,7 @@ game.PlayerEntity = me.Entity.extend({
 			//uses the global variable that helps the player loose health
 		    //variable located in game.js
 			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer){
-				cosole.log("tower Hit");
+				//cosole.log("tower Hit");
 				this.lastHit = this.now;
 				//character dies/looses health when the player attacks the creep more than a certain number of attacks
 				response.b.loseHealth(game.data.playerAttack);
@@ -203,6 +205,13 @@ game.PlayerEntity = me.Entity.extend({
 				){
 				//updates the timers
 				this.lastHit = this.now;
+				//linked to the line of code above 
+				//if the creepe health is less than our attack, execute code in if statement
+				if(response.b.health <= game.data.playerAttack){
+					//adds one gold for a creep kill
+					game.data.gold += 1;
+					console.log("Current gold: " + game.data.gold);
+				}
 				//the player dies or looses health if it is attacking for too long
 				//timer
 				response.b.loseHealth(game.data.playerAttack);
@@ -563,7 +572,8 @@ game.GameManager = Object.extend({
 	init: function(x, y, settings){
 		this.now = new Date().getTime();
 		this.lastCreep = new Date().getTime();
-
+		//creepe cannot pause at all
+		this.paused = false;
 		this.alwaysUpdate = true;
 	},
 
@@ -577,6 +587,13 @@ game.GameManager = Object.extend({
 		}
 
 		//controls when the creep spons
+		if(Math.round(this.now/1000)%20 ===0 && (this.now - this.lastCreep >= 1000)){
+			game.data.gold += 1;
+			console.log("Current gold: " + game.data.gold);
+
+		}
+
+		//controls when the creep spons
 		if(Math.round(this.now/1000)%10 ===0 && (this.now - this.lastCreep >= 1000)){
 			//controls when the creep spons
 			this.lastCreep = this.now;
@@ -584,8 +601,8 @@ game.GameManager = Object.extend({
 			var creepe = me.pool.pull("EnemyCreep", 1000, 0, {});
 			me.game.world.addChild(creepe, 5);
 
-			var creepe1 = me.pool.pull("Player2", 1000, 0, {});
-			me.game.world.addChild(creepe, 5);
+			//var creepe1 = me.pool.pull("Player2", 1000, 0, {});
+			//me.game.world.addChild(creepe, 5);
 
 		}
 
