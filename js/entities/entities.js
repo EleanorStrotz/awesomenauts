@@ -3,16 +3,9 @@
 //also the shape of it
 game.PlayerEntity = me.Entity.extend({
 	init: function(x, y, settings) {
-		this._super(me.Entity, 'init', [x, y, {
-			image: "player", 
-			width: 64,
-			height: 64,
-			spritewidth: "64",
-			spriteheight: "64",
-			getShape: function(){
-				return(new me.Rect(0, 0, 100, 70)).toPolygon();
-			} 
-			}]);
+		this.setSuper();
+		this.setPlayerTimers();
+
 		//sets type so that creep can collide with it
 		this.type = "PlayerEntity";
 		//sets players health
@@ -23,16 +16,13 @@ game.PlayerEntity = me.Entity.extend({
 		this.body.setVelocity(game.data.playerMoveSpeed, 20);
 		//keeps track of what direction your character is going
 		this.facing = "right";
-		//keeps track of what time it is for the game
-		this.now = new Date().getTime();
-		//lets the character hit the other characters over and over again
-		this.lastHit = this.now;
+		
 		//players death function
 		//what happens if the player dies
 		this.dead = false;
 		//a gold is added when the creep dies from attack
 		this.attack = game.data.playerAttack;
-		this.lastAttack = new Date().getTime();
+		
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
 
@@ -49,6 +39,30 @@ game.PlayerEntity = me.Entity.extend({
 		//sets currect animation
 		this.renderable.setCurrentAnimation("idle");
 
+	},
+
+	//function sets up the super class
+	setSuper: function (){
+		this._super(me.Entity, 'init', [x, y, {
+			image: "player", 
+			width: 64,
+			height: 64,
+			spritewidth: "64",
+			spriteheight: "64",
+			getShape: function(){
+				return(new me.Rect(0, 0, 100, 70)).toPolygon();
+			} 
+			}]);
+	},
+
+//takes all the code from other parts and puts it in a function to make it more organized
+//timers set
+	setPlayerTimers: function(){
+		//keeps track of what time it is for the game
+		this.now = new Date().getTime();
+		//lets the character hit the other characters over and over again
+		this.lastHit = this.now;
+		this.lastAttack = new Date().getTime();
 	},
 
 	update: function(delta){
