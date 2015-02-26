@@ -3,42 +3,29 @@
 //also the shape of it
 game.PlayerEntity = me.Entity.extend({
 	init: function(x, y, settings) {
+		//leads to set super fuction below
+		//use these fucntions to orgainize code
 		this.setSuper();
+		//leads to set player timer function
 		this.setPlayerTimers();
-
+		//leads to the function attribute
+		this.setAttributes();
 		//sets type so that creep can collide with it
 		this.type = "PlayerEntity";
-		//sets players health
-		//uses the global variable that helps the player loose health
-		//variable located in game.js
-		this.heatlth = game.data.playerHealth;
-		//sets the speed of the character
-		this.body.setVelocity(game.data.playerMoveSpeed, 20);
-		//keeps track of what direction your character is going
-		this.facing = "right";
-		
-		//players death function
-		//what happens if the player dies
-		this.dead = false;
-		//a gold is added when the creep dies from attack
-		this.attack = game.data.playerAttack;
+		//leads to set flags function
+		this.setFlags();
 		
 		//where ever the player goes the screen follows
 		me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
-
-
-		//this anmiantion is used for when we are just standing
-		this.renderable.addAnimation("idle", [78]);
-		//adds animation to orcs/ characters walk
-		// 80 at the end is the speed of the walk
-		// the numbers in the brackets are the different pics we are using for the animation
-		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
-		//adds animation to the action attack
-		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
+		
+		//leads to add animation fucntion below
+		//used to organize code
+		this.addAnimation();
 
 		//sets currect animation
 		this.renderable.setCurrentAnimation("idle");
 
+		
 	},
 
 	//function sets up the super class
@@ -63,6 +50,40 @@ game.PlayerEntity = me.Entity.extend({
 		//lets the character hit the other characters over and over again
 		this.lastHit = this.now;
 		this.lastAttack = new Date().getTime();
+	},
+
+	//set attributes function
+	//leads up to line 11
+	setAttributes: function(){
+		//sets players health
+		//uses the global variable that helps the player loose health
+		//variable located in game.js
+		this.heatlth = game.data.playerHealth;
+		//sets the speed of the character
+		this.body.setVelocity(game.data.playerMoveSpeed, 20);
+		//a gold is added when the creep dies from attack
+		this.attack = game.data.playerAttack;
+	},
+	//used to organize our code
+	//leads to line of code above
+	setFlags: function(){
+		//keeps track of what direction your character is going
+		this.facing = "right";
+		//players death function
+		//what happens if the player dies
+		this.dead = false;
+	},
+	//leads to add animation line of code above
+	//used to orgainze code
+	addAnimation: function(){
+		//this anmiantion is used for when we are just standing
+		this.renderable.addAnimation("idle", [78]);
+		//adds animation to orcs/ characters walk
+		// 80 at the end is the speed of the walk
+		// the numbers in the brackets are the different pics we are using for the animation
+		this.renderable.addAnimation("walk", [117, 118, 119, 120, 121, 122, 123, 124, 125], 80);
+		//adds animation to the action attack
+		this.renderable.addAnimation("attack", [65, 66, 67, 68, 69, 70, 71, 72], 80);
 	},
 
 	update: function(delta){
@@ -234,3 +255,4 @@ game.PlayerEntity = me.Entity.extend({
 	}
 
 });
+// 30; 4:12
