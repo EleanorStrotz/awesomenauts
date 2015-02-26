@@ -89,39 +89,13 @@ game.PlayerEntity = me.Entity.extend({
 	update: function(delta){
 		//updates this.now
 		this.now = new Date().getTime();
-		//makes the player die
-		if (this.health <= 0){
-			this.dead = true;
-		}
-
-		//checks and sees if the right key is pressed
-		if(me.input.isKeyPressed("right")){
-			// adds the position of my x by adding the velocity defined above in
-			// setVelocity() and multiplying it by me.timer.tick
-			// me.timer.tick makes the movement look smooth
-			this.body.vel.x += this.body.accel.x * me.timer.tick;
-			//checks what way your character is going
-			this.facing = "right";
-			//flips the character so he doesnt go backwards
-			this.flipX(true);
-			//if we press the wrong button then the else statement will go into effect
-			// if statement binds the left key so that we can move left
-		}else if(me.input.isKeyPressed("left")){
-			this.facing = "left";
-			this.body.vel.x -=this.body.accel.x * me.timer.tick;
-			this.flipX(false);
-
-			}else{
-			this.body.vel.x = 0;
-		}
-		//not in else statement because jumping involves the y axis not the x
-		// binds the space bar so that we can jump
-		if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
-			this.body.jumping = true;
-			this.body.vel.y -= this.body.accel.y * me.timer.tick;
-			me.audio.play("stomp");
-
-		}
+		//checks to see if our player has or had not died
+		//leads to function below
+		//used to organize code
+		this.dead = checkIfDead();
+		//leads to fucntion below
+		//organizes code
+		this.checkKeyPressesAndMove ();
 
 
 		//if attack key is pressed character will attack
@@ -162,6 +136,65 @@ game.PlayerEntity = me.Entity.extend({
 		this._super(me.Entity, "update", [delta]);
 		return true;
 	},
+
+	//fucntion leads up to line of code
+	//organizes our code
+	checkIfDead: function(){
+		//makes the player die
+		if (this.health <= 0){
+			return true;
+		}
+		return false;
+	},
+	//organizes my code
+	//leads up to code under update fucntion
+	checkKeyPressesAndMove: function(){
+		//checks and sees if the right key is pressed
+		if(me.input.isKeyPressed("right")){
+			//function below
+			//organizes code
+			this.moveRight();
+			//if we press the wrong button then the else statement will go into effect
+			// if statement binds the left key so that we can move left
+		}else if(me.input.isKeyPressed("left")){
+			//linked to fucntion below
+			//organizes code
+			this.moveLeft();
+			}else{
+			this.body.vel.x = 0;
+		}
+		//not in else statement because jumping involves the y axis not the x
+		// binds the space bar so that we can jump
+		if(me.input.isKeyPressed("jump") && !this.body.jumping && !this.body.falling){
+			//linked to code below
+			//organizes code
+			this.jump();
+		}
+	},
+
+	moveRight: function(){
+		    // adds the position of my x by adding the velocity defined above in
+			// setVelocity() and multiplying it by me.timer.tick
+			// me.timer.tick makes the movement look smooth
+			this.body.vel.x += this.body.accel.x * me.timer.tick;
+			//checks what way your character is going
+			this.facing = "right";
+			//flips the character so he doesnt go backwards
+			this.flipX(true);
+	},
+ 	
+ 	moveLeft: function(){
+ 		this.facing = "left";
+			this.body.vel.x -=this.body.accel.x * me.timer.tick;
+			this.flipX(false);
+ 	},
+
+ 	jump: function(){
+ 		this.body.jumping = true;
+			this.body.vel.y -= this.body.accel.y * me.timer.tick;
+			me.audio.play("stomp");
+
+ 	},
 
 	loseHealth: function(damage){
 		//player loses health
