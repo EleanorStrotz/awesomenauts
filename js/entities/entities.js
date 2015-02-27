@@ -172,6 +172,8 @@ game.PlayerEntity = me.Entity.extend({
 		}
 	},
 
+	//organizes code
+	//linked to pressandmove fucntion
 	moveRight: function(){
 		    // adds the position of my x by adding the velocity defined above in
 			// setVelocity() and multiplying it by me.timer.tick
@@ -182,13 +184,15 @@ game.PlayerEntity = me.Entity.extend({
 			//flips the character so he doesnt go backwards
 			this.flipX(true);
 	},
- 	
+ 	//organizes code
+	//linked to pressandmove fucntion
  	moveLeft: function(){
  		this.facing = "left";
 			this.body.vel.x -=this.body.accel.x * me.timer.tick;
 			this.flipX(false);
  	},
-
+     //organizes code
+	//linked to pressandmove fucntion
  	jump: function(){
  		this.body.jumping = true;
 			this.body.vel.y -= this.body.accel.y * me.timer.tick;
