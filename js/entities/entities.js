@@ -72,6 +72,9 @@ game.PlayerEntity = me.Entity.extend({
 		//players death function
 		//what happens if the player dies
 		this.dead = false;
+		//linked to update class or attacking fuctnion
+		//used to orgainze code
+		this.attacking = flase;
 	},
 	//leads to add animation line of code above
 	//used to orgainze code
@@ -96,39 +99,11 @@ game.PlayerEntity = me.Entity.extend({
 		//leads to fucntion below
 		//organizes code
 		this.checkKeyPressesAndMove ();
-
-
-		//if attack key is pressed character will attack
-		if(me.input.isKeyPressed("attack")){
-			//checks if it has gone through its animation stage
-			if(!this.renderable.isCurrentAnimation("attack")){
-				//sets the current animation to attackand once that is over
-				// goes back to the idle animation
-				this.renderable.setCurrentAnimation("attack", "idle");
-				//makes it so that the next time we start this sequence we begin
-				// from the the first animation, not wherever we left off when we
-				// switched to another animation
-				//this.renderable.setCurrentAnimationFrame();
-				me.audio.play("jump");
-			}
-		}
-		//checks if character is moving
-		//checks that we dont have an attack animation going on
-		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
-		//if statement checks to see whats going on with the character
-		if(!this.renderable.isCurrentAnimation("walk")){
-			this.renderable.setCurrentAnimation("walk");
-		}
-	}//else statement fixes the error of the character walking backwards
-	else if(!this.renderable.isCurrentAnimation("attack")){
-		this.renderable.setCurrentAnimation("idle");
-	}
-
+		//organizes our code
+		this.setAnimation();
 		//checks for collisions
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
-
 		
-
 		// tells the code above to work
 		this.body.update(delta);
 		
@@ -170,6 +145,9 @@ game.PlayerEntity = me.Entity.extend({
 			//organizes code
 			this.jump();
 		}
+		//attack function
+		//orgainzes update function
+		this.attacking = me.input.isKeyPressed("attack");
 	},
 
 	//organizes code
@@ -197,6 +175,36 @@ game.PlayerEntity = me.Entity.extend({
  		this.body.jumping = true;
 			this.body.vel.y -= this.body.accel.y * me.timer.tick;
 			me.audio.play("stomp");
+
+ 	},
+ 	//linked to attack fucntion in update class
+ 	setAnimation: function(){
+ 		//if attack key is pressed character will attack
+		//linked to checkKeyPressesandMove fucntion to organize code
+		if(this.attacking){
+			//checks if it has gone through its animation stage
+			if(!this.renderable.isCurrentAnimation("attack")){
+				//sets the current animation to attackand once that is over
+				// goes back to the idle animation
+				this.renderable.setCurrentAnimation("attack", "idle");
+				//makes it so that the next time we start this sequence we begin
+				// from the the first animation, not wherever we left off when we
+				// switched to another animation
+				//this.renderable.setCurrentAnimationFrame();
+				me.audio.play("jump");
+			}
+		}
+		//checks if character is moving
+		//checks that we dont have an attack animation going on
+		else if(this.body.vel.x !== 0 && !this.renderable.isCurrentAnimation("attack")){
+		//if statement checks to see whats going on with the character
+		if(!this.renderable.isCurrentAnimation("walk")){
+			this.renderable.setCurrentAnimation("walk");
+		}
+	}//else statement fixes the error of the character walking backwards
+	else if(!this.renderable.isCurrentAnimation("attack")){
+		this.renderable.setCurrentAnimation("idle");
+	}
 
  	},
 
@@ -292,4 +300,3 @@ game.PlayerEntity = me.Entity.extend({
 	}
 
 });
-// 30; 4:12
