@@ -103,7 +103,7 @@ game.PlayerEntity = me.Entity.extend({
 		this.setAnimation();
 		//checks for collisions
 		me.collision.check(this, true, this.collideHandler.bind(this), true);
-		
+
 		// tells the code above to work
 		this.body.update(delta);
 		
@@ -221,7 +221,17 @@ game.PlayerEntity = me.Entity.extend({
 	// tells us if we collide with the enemy base
 	collideHandler: function(response){
 		if(response.b.type==='EnemyBaseEntity'){
-			var ydif = this.pos.y - response.b.pos.y;
+			//organizes the code
+			this.collideWithEnemyBase(response);
+			//makes the creep loose health
+		}else if(response.b.type==='EnemyCreep'){
+			//orgainzes the code
+			this.collideWithEnemyCreep(response);
+		}
+	},
+
+	collideWithEnemyBase:function(response){
+		    var ydif = this.pos.y - response.b.pos.y;
 			var xdif = this.pos.x - response.b.pos.x;
  			
  			//checks to see when character collides with enemy base
@@ -254,14 +264,22 @@ game.PlayerEntity = me.Entity.extend({
 				//character dies/looses health when the player attacks the creep more than a certain number of attacks
 				response.b.loseHealth(game.data.playerAttack);
 			}
-			//makes the creep loose health
-		}else if(response.b.type==='EnemyCreep'){
-			//lets you loose health if you are facing the x axis
+	},
+	collideWithEnemyCreep:function(response){
+		    //lets you loose health if you are facing the x axis
 			var xdif = this.pos.x - response.b.pos.x;
 			//lets you loose health if you are facing the y axis
 			var ydif = this.pos.y - response.b.pos.y;
-
-			//loose health if character comes in form the right or left
+			//orgainizes code
+			this.stopMovement(xdif);
+			//linked to check attack fucntion
+			if(this.checkAttack(xdif, ydif)){
+				this.hitCreep(response);
+			};
+			
+	},
+	stopMovement: function(xdif){
+		//loose health if character comes in form the right or left
 			//makes it so that we cant walk right into the base
 			if (xdif>0){
 				////this.pos.x = this.pos.x + 1;
@@ -276,7 +294,9 @@ game.PlayerEntity = me.Entity.extend({
 					this.body.vel.x = 0;
 				}
 			}
-			//uses the global variable that helps the player loose health
+	},
+	checkAttack: function(xdif, ydif){
+		//uses the global variable that helps the player loose health
 			//variable located in game.js
 			if(this.renderable.isCurrentAnimation("attack") && this.now-this.lastHit >= game.data.playerAttackTimer
 				//checks the absolute value of the y and x difference
@@ -285,7 +305,13 @@ game.PlayerEntity = me.Entity.extend({
 				){
 				//updates the timers
 				this.lastHit = this.now;
-				//linked to the line of code above 
+				return true;
+			}
+			//if the attack check is false it will return false
+			return false;
+	},
+	hitCreep: function  (response) {
+		//linked to the line of code above 
 				//if the creepe health is less than our attack, execute code in if statement
 				if(response.b.health <= game.data.playerAttack){
 					//adds one gold for a creep kill
@@ -295,8 +321,5 @@ game.PlayerEntity = me.Entity.extend({
 				//the player dies or looses health if it is attacking for too long
 				//timer
 				response.b.loseHealth(game.data.playerAttack);
-			}
-		}
 	}
-
 });
