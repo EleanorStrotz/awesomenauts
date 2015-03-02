@@ -21,7 +21,7 @@ game.PlayScreen = me.ScreenObject.extend({
 		
 
 		//generates game mangaer in play.js
-		var gamemanager = me.pool.pull("GameManager", 0, 0, {});
+		var gameTimerManager = me.pool.pull("GameTimerManager", 0, 0, {});
 		//adds game manager into the game/world
 		me.game.world.addChild(gamemanager, 0);
 

@@ -1,4 +1,7 @@
-game.GameManager = Object.extend({
+//removes the player and resets him if he dies
+//adds gold
+//manages creeps
+game.GameTimerManager = Object.extend({
 	init: function(x, y, settings){
 		this.now = new Date().getTime();
 		this.lastCreep = new Date().getTime();
@@ -9,12 +12,7 @@ game.GameManager = Object.extend({
 
 	update: function(){
 		this.now = new Date().getTime();
-
-		//dead function in game manager
-		if(game.data.player.dead){
-			me.game.world.removeChild(game.data.player);
-			me.state.current().resetPlayer(10, 0);
-		}
+		
 
 		//controls when the creep spons
 		if(Math.round(this.now/1000)%20 ===0 && (this.now - this.lastCreep >= 1000)){
@@ -39,4 +37,25 @@ game.GameManager = Object.extend({
 		return true;
 	}
 });
+
+//manages the players death
+//oragnizes the code
+game.HeroDeathManager = Object.extend({
+	init: function(x, y, settings){
+		this.alwaysUpdate = true;
+
+	},
+
+	update: function(){
+		//dead function in game manager
+		if(game.data.player.dead){
+			me.game.world.removeChild(game.data.player);
+			me.state.current().resetPlayer(10, 0);
+		}
+	}
+});
+
+
+
+       
 
