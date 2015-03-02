@@ -5,7 +5,7 @@ game.PlayerEntity = me.Entity.extend({
 	init: function(x, y, settings) {
 		//leads to set super fuction below
 		//use these fucntions to orgainize code
-		this.setSuper();
+		this.setSuper(x, y);
 		//leads to set player timer function
 		this.setPlayerTimers();
 		//leads to the function attribute
@@ -29,7 +29,7 @@ game.PlayerEntity = me.Entity.extend({
 	},
 
 	//function sets up the super class
-	setSuper: function (){
+	setSuper: function (x, y){
 		this._super(me.Entity, 'init', [x, y, {
 			image: "player", 
 			width: 64,
@@ -74,7 +74,7 @@ game.PlayerEntity = me.Entity.extend({
 		this.dead = false;
 		//linked to update class or attacking fuctnion
 		//used to orgainze code
-		this.attacking = flase;
+		this.attacking = false;
 	},
 	//leads to add animation line of code above
 	//used to orgainze code
@@ -95,7 +95,7 @@ game.PlayerEntity = me.Entity.extend({
 		//checks to see if our player has or had not died
 		//leads to function below
 		//used to organize code
-		this.dead = checkIfDead();
+		this.dead = this.checkIfDead();
 		//leads to fucntion below
 		//organizes code
 		this.checkKeyPressesAndMove ();
