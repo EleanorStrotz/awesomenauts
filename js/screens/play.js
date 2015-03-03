@@ -15,17 +15,20 @@ game.PlayScreen = me.ScreenObject.extend({
 
 		//loads the plyer so that it will show up when you run it
 		var player = me.pool.pull("player", 0, 420, {});
-		// adds player to the world
-		
-
+		//adds player into the world
+		me.game.world.addChild(player, 0);
 		
 
 		//generates game mangaer in play.js
 		var gameTimerManager = me.pool.pull("GameTimerManager", 0, 0, {});
 		//adds game manager into the game/world
-		me.game.world.addChild(gamemanager, 0);
+		me.game.world.addChild(gameTimerManager, 0);
 
-		//binds the right key for movement
+		//generates hero death manager in play.js
+		var heroDeathManager = me.pool.pull("HeroDeathManager", 0, 0, {});
+		//adds hero death manager into the game/world
+		me.game.world.addChild(heroDeathManager, 0);
+
 		me.input.bindKey(me.input.KEY.RIGHT, "right");
 		//binds the left key for movement
 		me.input.bindKey(me.input.KEY.LEFT, "left");

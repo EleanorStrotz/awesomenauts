@@ -323,4 +323,3 @@ game.PlayerEntity = me.Entity.extend({
 				response.b.loseHealth(game.data.playerAttack);
 	}
 });
-//6:24 35
