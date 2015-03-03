@@ -11,6 +11,7 @@ game.EnemyBaseEntity = me.Entity.extend({
 				return (new me.Rect(0, 0, 100, 70)).toPolygon();
 			}
 		}]);
+		
 		//tells us the tower has not been destroyed
 		this.broken = false;
 		//gives the tower a health
