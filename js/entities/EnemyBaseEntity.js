@@ -35,6 +35,8 @@ game.EnemyBaseEntity = me.Entity.extend({
 		// tells us to die if health is less than zeron
 		if(this.health<=0){
 			this.broken = true;
+			//if the enemy dies he will not win
+			game.data.win = true;
 			this.renderable.setCurrentAnimation("broken");
 		}
 		this.body.update(delta);

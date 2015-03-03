@@ -56,10 +56,25 @@ game.HeroDeathManager = Object.extend({
 			me.game.world.removeChild(game.data.player);
 			me.state.current().resetPlayer(10, 0);
 		}
+		return true;
 	}
 });
 
+//gains the player expeience if they win
+game.ExperienceManager = Object.extend({
+	init: function (x, y, settings) {
+		this.alwaysUpdate = true;
+	},
 
+	update: function(){
+		if(game.data.win === true){
+			game.data.exp += 10;
+		}else if(game.data.win === false){
+			game.data.exp += 1;
+		}
+		return true;
+	}
+});
 
        
 
