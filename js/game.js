@@ -52,6 +52,8 @@ var game = {
 	// creates a safe engine with these variables
 	me.save.add({exp: 0, exp1: 0, exp2: 0, exp3: 0, exp4: 0});
 
+	me.state.SPENDEXP = 112;
+
 	//prints out gameover function from gamemanager.js
 	//console.log(game.data.exp);
 	//console.log(game.data.exp2);
@@ -91,6 +93,7 @@ var game = {
 
 		me.state.set(me.state.MENU, new game.TitleScreen());
 		me.state.set(me.state.PLAY, new game.PlayScreen());
+		me.state.set(me.state.SPENDEXP, new game.SpendExp());
 
 		// Start the game.
 		me.state.change(me.state.MENU );
