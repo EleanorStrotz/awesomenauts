@@ -160,7 +160,14 @@ game.SpendGold = Object.extend({
 
 			//function renderer tells the font size of the words in quotations
 			draw: function(renderer){
-				this.font.draw(renderer.getContext(), "PRESS F1-F6 TO BUY, B TO EXIT", this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "PRESS F1-F6 TO BUY, B TO EXIT. Current Gold: " + game.data.gold, this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "Skill 1: Increase Damage. Current Level: " + game.data.exp1 + " Cost: " + ((game.data.exp1+1)*10);
+				this.font.draw(renderer.getContext(), "Skill 2: Run Faster " + game.data.exp2 + " Cost: " + ((game.data.exp2+1)*10), this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "Skill 3: Increase Damage " game.data.exp3 + " Cost: " + ((game.data.exp1+1)*10), this.pos.x, this.pos.y);
+				this.font.draw(renderer.getContext(), "O Ability: ", this.pos.x game.data.exp1 + " Cost: " + ((game.data.exp1+1)*10), this.pos.y);
+				this.font.draw(renderer.getContext(), "W Ability: ", this.pos.x game.data.exp1 + " Cost: " + ((game.data.exp1+1)*10), this.pos.y);
+				this.font.draw(renderer.getContext(), "E Ability: ", this.pos.x game.data.exp1 + " Cost: " + ((game.data.exp1+1)*10), this.pos.y);
+
 			}
 
 
@@ -184,4 +191,4 @@ game.SpendGold = Object.extend({
 	}
 
 });
-
+// 6:06
