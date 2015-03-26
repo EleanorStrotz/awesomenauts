@@ -122,6 +122,9 @@ game.SpendGold = Object.extend({
 			}
 		}
 
+		//checks the buy keys below
+		this.checkBuyKeys();
+
 
 		return true;
 		
@@ -190,5 +193,31 @@ game.SpendGold = Object.extend({
 		me.game.world.removeChild(game.data.buytext);
 	}
 
+//check that the buy keys are working
+checkBuyKeys: function(){
+	if(me.input.isKeyPressed("F1")){
+		//checks the cost of the key pressed
+		if(this.checkCost(1)){
+
+		}
+	}else if(me.input.isKeyPressed("F2")){
+
+	}else if(me.input.isKeyPressed("F3")){
+		
+	}else if(me.input.isKeyPressed("F4")){
+		
+	}else if(me.input.isKeyPressed("F5")){
+		
+	}else if(me.input.isKeyPressed("F6")){
+		
+	}
+},
+//checks the cost of the key pressed
+checkCost: function(){
+
+}
+
+
+
 });
-// 6:06
+// video 50, 
