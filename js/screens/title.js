@@ -57,7 +57,7 @@ game.TitleScreen = me.ScreenObject.extend({
 			}
 		})));
 
-		me.game.world.addChild(game.data.option2);
+		//me.game.world.addChild(game.data.option2);
 		
 	},
 	
