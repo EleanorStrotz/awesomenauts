@@ -31,3 +31,10 @@ body {
 	image-rendering: optimize-contrast;
 	-ms-interpolation-mode: nearest-neighbor;
 }
+/*style for the username and password input*/
+#input{
+	display: block;
+	text-align: center;
+	visibility: hidden;
+
+}
