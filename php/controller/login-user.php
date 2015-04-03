@@ -36,6 +36,7 @@
          $array["exp3"] = $row["exp3"];
          //adds array exp variables into the login successful function
          $array["exp4"] = $row["exp4"];
+         $_SESSION["name"] = $username;
 
 
    	 	echo json_encode($array);
