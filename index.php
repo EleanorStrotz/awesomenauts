@@ -143,9 +143,14 @@
 			.success(function(response){
 				if(response==="Invaild username and password"){
 					alert (response);
-					me.state.change(me.state.PLAY);
 				}else{
-					alert(response);
+					var data = jQuery.parseJSON(response);
+					game.data.exp = data["exp"];
+					game.data.exp1 = data["exp1"];
+					game.data.exp2 = data["exp2"];
+					game.data.exp3 = data["exp3"];
+					game.data.exp4 = data["exp4"];
+					me.state.change(me.state.SPENDEXP);
 				}
 			})
 			//if the register doesnt work this code will execute
@@ -160,5 +165,5 @@
 
 	</body>
 </html>
-<!-- video 57, 2:50 -->
+
 
