@@ -99,6 +99,40 @@
 				}
 			});
 		</script>
+		
+		<script>
+		// <!-- makes the mainmenu key work and execute the action it is suppose to do go to the main menu from the page the user is on
+		$("#mainmenu").bind("click", function(){
+			me.state.change(me.state.MENU);
+		});
+		// <!-- makes the register key work and execute the action it is suppose to do
+		$("#register").bind("click", function(){
+			$.ajax({
+				type: "POST",
+				url: "php/controller/create-user.php",
+				data: {
+					username: $('#username').val(),
+					password: $('#password').val()
+				},
+				dataType: "text"
+			}) // if the register works then this code will execute
+			.success(function(response){
+				if(response==="true"){
+					me.state.change(me.state.PLAY);
+				}else{
+					alert(response);
+				}
+			})
+			//if the register doesnt work this code will execute
+			.fail(function(response){
+				//if it doesnt work this will be printed
+				alert("Fail");
+			});
+		});
+		
+
+		</script>
+
 	</body>
 </html>
 
