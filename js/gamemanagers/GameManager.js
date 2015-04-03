@@ -9,9 +9,11 @@ game.ExperienceManager = Object.extend({
 		if(game.data.win === true && !this.gameover){
 			//the game is over when the player dies
 			this.gameOver(true);
+			alert("YOU WIN!");
 		}else if(game.data.win === false && !this.gameover){
 			this.gameOver(false);
 			//this.gameOver = true;
+			alert("YOU LOSE!");
 			//saves current game variable
 			//me.save.exp = game.data.exp;
 		}
@@ -35,4 +37,4 @@ game.ExperienceManager = Object.extend({
 			
 			
 	}
-});
+});// 2:00 , 78
