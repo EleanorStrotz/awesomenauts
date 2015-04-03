@@ -3,8 +3,6 @@
 // require once links config.php to create-user.php
 	require_once(__DIR__ . "/../model/config.php");
 
-	//inputs email to database
-	$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
 	//inputs username to database
 	$username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_STRING);
 	//inputs password to database
@@ -23,10 +21,20 @@
 		. "email = '$email',"
 		. "username = '$username',"
 		. "password = '$hashedPassword',"
-		. "salt = '$salt'");
+		. "salt = '$salt', "
+		. "exp = 0, "
+		. "exp1 = 0, "
+		. "exp2 = 0, "
+		. "exp3 = 0, "
+		. "exp4 = 0");
+
+	// sets up the username so that the user can enter their name
+	$_SESSION["name"] = $username;
+
 	// if statement checks if the query function was successful or not
 	if ($query) {
-		echo "Successfully created user: $username";
+		//need this for Ajax on index.php
+		echo "true";
 	}
 	//else statement echos if the query wasnt successful
 	else {

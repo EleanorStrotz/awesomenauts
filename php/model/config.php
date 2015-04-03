@@ -5,7 +5,7 @@
 	session_start();
 	session_regenerate_id(true);
 // variable stores the path for our blog project
-$path = "/strotze.blog/";
+$path = "/awesomenauts/php/";
 
 /* the variable that has our local host stored in it*/
  $host = "localhost";
@@ -14,7 +14,7 @@ $path = "/strotze.blog/";
  // the variable password is our password for our php admin account
  $password = "root"; 
  // the variable database stores the name the name of our database
- $database = "blog_db";
+ $database = "awesomenauts_db";
 
 // isset checks if $_SESSION has the same $connection stored in it; only creates database once
 if(!isset($_SESSION["connection"])) {
