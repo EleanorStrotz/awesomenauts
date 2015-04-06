@@ -42,10 +42,10 @@
    	 }
    	 // else statement echos if the if statemt was incorrect
    	 else {
-   	 	echo "Invalid";
+   	 	echo "Invalid username and password";
    	 }
    }
    // else statement echos if the if statment for $query is not working
    else {
-   	echo "Invalid";
+   	echo "Invalid username and password";
    }
