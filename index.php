@@ -121,13 +121,11 @@
 				dataType: "text"
 			}) // if the register works then this code will execute
 			.success(function(response){
-				me.state.change(me.state.PLAY);
-				// if(response === "true"){
-				// 	me.state.change(me.state.PLAY);
-				// }else{
-				// 	me.state.change(me.state.PLAY);
-				// 	alert(response);
-				// }
+				 if(response === "true"){
+				 	me.state.change(me.state.PLAY);
+				 }else{
+				 	alert(response);
+				 }
 			})
 			//if the register doesnt work this code will execute
 			.fail(function(response){
@@ -147,19 +145,17 @@
 				dataType: "text"
 			}) // if the register works then this code will execute
 			.success(function(response){
-				me.state.change(me.state.PLAY);
-				// if(response=="Invalid"){
-				// 	me.state.change(me.state.PLAY);
-				//  	alert (response);
-				// }else{
-				// 	var data = jQuery.parseJSON(response);
-				// 	game.data.exp = data["exp"];
-				// 	game.data.exp1 = data["exp1"];
-				// 	game.data.exp2 = data["exp2"];
-				// 	game.data.exp3 = data["exp3"];
-				// 	game.data.exp4 = data["exp4"];
-				// 	me.state.change(me.state.SPENDEXP);
-				// }
+				 if(response==="Invalid username and password"){
+				  	alert(response);
+				 }else{
+				 	var data = jQuery.parseJSON(response);
+				 	game.data.exp = data["exp"];
+				 	game.data.exp1 = data["exp1"];
+				 	game.data.exp2 = data["exp2"];
+				 	game.data.exp3 = data["exp3"];
+				 	game.data.exp4 = data["exp4"];
+				 	me.state.change(me.state.SPENDEXP);
+				 }
 			})
 			//if the register doesnt work this code will execute
 			.fail(function(response){
