@@ -95,6 +95,8 @@ var game = {
 		me.pool.register("player", game.PlayerEntity, true);
 		//adds player 2 into the game
 		me.pool.register("Player2", game.Player2, true);
+		//adds player 2 into the game
+		me.pool.register("EnemyHero", game.EnemyHero, true);
 		//registers the player base from melon js into the game
 		me.pool.register("PlayerBase", game.PlayerBaseEntity, true);
 		// registers the enemy base from melon js to the game

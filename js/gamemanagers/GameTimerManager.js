@@ -37,6 +37,9 @@ game.GameTimerManager = Object.extend({
 
 			var gloop = me.pool.pull("Player2", 200, 0 , {});
 			me.game.world.addChild(gloop, 5);
+
+			var creep2 = me.pool.pull("EnemyHero", 1000, 100 , {});
+			me.game.world.addChild(creep2, 5);
 		}
 	}
 });

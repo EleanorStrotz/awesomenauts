@@ -16,6 +16,8 @@ game.resources = [
 	 {name: "creep1", type:"image", src: "data/img/brainmonster.png"},
 	 // loads player 2s image
 	 {name: "Player2", type:"image", src: "data/img/gloop.png"},
+	 // loads player 2s image
+	 {name: "hero", type:"image", src: "data/img/skeletonDagger.png"},
 	 //loads title screen picture in the background
 	 {name: "title-screen", type:"image", src: "data/img/title.png"},
 	 {name: "exp-screen", type:"image", src: "data/img/loadpic.png"},
